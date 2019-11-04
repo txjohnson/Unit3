@@ -1,21 +1,24 @@
 extends "res://objects/Basic.gd"
 
-# GOAL: Use conditions, functions and loops to collect coins and toggle
-#       switches.
+# GOAL: Use the not operator to make Luigi turn left whenever there
+#       is an obstacle in his way.
 
-# The elements of the map appear at random. You can't depend on things
-# being a certain way every time you play the scene.
+# The variable isBlocked is true when something is in his way and
+# false when the path is clear.
 #
 # Use conditions to handle these changes.
 
 
 # INSTRUCTIONS:
-# Define your own functions to break down the problem into simpler parts.
+# Fill in the body of this loop so that Luigi will reach the flag.
 
-# INSTRUCTIONS (cont):
-# Call your functions to solve the puzzle.
 func execute (userdata):
-
+	for i in range(0, 33):
+		if not isBlocked:
+			goForward()
+		else:
+			turnLeft()
+			goForward()
 	pass
 
 
@@ -44,18 +47,14 @@ func execute (userdata):
 
 
 func _ready():
-	$Luigi.face_north()
-	put_luigi_at_cell (15, 8)
+	$Luigi.face_east()
+	updateBlocked()
+	print(isBlocked)
+	
+	put_luigi_at_cell (12, 12)
 
-	coin_or_switch (12, 8)
-	coin_or_switch (17, 8)
-	coin_or_switch (15, 6)
-	coin_or_switch (15, 10)
-
-	coin_or_switch (12, 6)
-	coin_or_switch (12, 10)
-	coin_or_switch (17, 6)
-	coin_or_switch (17, 10)
+	put_flag_at_cell(17, 10)
+	$Flag.visible = true
 
 func coin_or_switch (cx, cy):
 	if rng.randi() % 2:

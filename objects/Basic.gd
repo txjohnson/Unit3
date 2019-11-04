@@ -13,6 +13,9 @@ var is_teleporting :bool = false
 var luigi_doing :int = 0
 var isOnClosedSwitch = false
 var isUnderCoin = false
+var isBlocked = false
+var isBlockedLeft = false
+var isBlockedRight = false
 var rng = RandomNumberGenerator.new()
 
 var coin = preload("res://objects/Coin.tscn")
@@ -29,6 +32,36 @@ func _ready():
 
 func _exit_tree():
 	stepper.wait_to_finish()
+
+func updateBlocked ():
+	var pos = $Luigi.next_forward_position()
+	var cx = (pos.x - 16) / 32
+	var cy = (pos.y + 8) / 32
+	
+	if $Stuff.get_cell (cx, cy) != -1:
+		isBlocked = true
+	else:
+		isBlocked = false
+	
+	pos = $Luigi.position_on_left()
+	cx = (pos.x - 16) / 32
+	cy = (pos.y + 8) / 32
+
+	if $Stuff.get_cell (cx, cy) != -1:
+		isBlockedLeft = true
+	else:
+		isBlockedLeft = false
+	
+	pos = $Luigi.position_on_right()
+	cx = (pos.x - 16) / 32
+	cy = (pos.y + 8) / 32
+
+	if $Stuff.get_cell (cx, cy) != -1:
+		isBlockedRight = true
+	else:
+		isBlockedRight = false
+	
+	
 	
 func turnLeft ():
 	waiting = true
@@ -41,11 +74,8 @@ func turnRight ():
 	proceed.wait()
 
 func goForward ():
-	var pos = $Luigi.next_forward_position()
-	var cx = (pos.x - 16) / 32
-	var cy = (pos.y + 8) / 32
 	
-	if $Stuff.get_cell (cx, cy) != -1:
+	if isBlocked:
 		return
 	
 	under_coin = null
@@ -54,7 +84,6 @@ func goForward ():
 	luigi_doing = 1
 	$Luigi.walk()
 	proceed.wait()
-	
 	
 func jump ():
 	waiting = true
@@ -70,6 +99,7 @@ func toggleSwitch():
 
 	
 func _on_Luigi_did_operation():
+	updateBlocked()
 	if waiting:
 		waiting = false
 		if luigi_doing == 1 && onpad != null:
@@ -115,6 +145,7 @@ func put_luigi_at_cell (cx, cy):
 	var y = cy * 32 - 8
 	print("coord: ", x, ", ", y)
 	$Luigi.position = Vector2(x, y)
+	updateBlocked()
 
 func put_coin_at_cell (cx, cy):
 	var newcoin = coin.instance()

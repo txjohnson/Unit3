@@ -30,6 +30,18 @@ func _process(delta):
 	elif was_moving:
 		was_moving = false
 		face (direction)
+
+func position_on_left():
+	var left = direction - 1
+	if left < 0: left = 3
+	var vec = move_vecs [left]
+	return position + Vector2(vec.x * walk_distance, vec.y * walk_distance)
+	
+func position_on_right():
+	var right = direction + 1
+	if right > 3: right = 0
+	var vec = move_vecs [right]
+	return position + Vector2(vec.x * walk_distance, vec.y * walk_distance)
 	
 func next_forward_position ():
 	var vec = move_vecs [direction]
