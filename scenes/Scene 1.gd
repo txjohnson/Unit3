@@ -17,7 +17,7 @@ extends "res://objects/Basic.gd"
 # 1. Move to first switch
 # 2. If the switch is closed, then use toggleSwitch() to open it
 # 3. Repeat for the remaining switches
-func execute (userdata):
+func execute ():
 
 	pass
 
@@ -54,4 +54,8 @@ func _ready():
 	put_random_switch_at_cell(16, 9)
 	put_random_switch_at_cell(18, 9)
 	
-		
+	proceed.post()
+
+func main(userdata):
+	proceed.wait()
+	execute()

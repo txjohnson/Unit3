@@ -16,7 +16,7 @@ extends "res://objects/Basic.gd"
 # 1. Decide how far luigi needs to move and set your for loop
 # 2. Add an if/elif statement to collect a coin or toggle a switch
 #    when Luigi encounters one
-func execute (userdata):
+func execute ():
 	for i in range (0, 1):
 		goForward()
 		
@@ -64,6 +64,8 @@ func _ready():
 	coin_or_switch (14, 12)
 	coin_or_switch (16, 12)
 
+	proceed.post()
+	
 func coin_or_switch (cx, cy):
 	if rng.randi() % 2:
 		put_coin_at_cell(cx, cy)
@@ -72,4 +74,7 @@ func coin_or_switch (cx, cy):
 	
 	
 	
+func main(userdata):
+	proceed.wait()
+	execute()
 	

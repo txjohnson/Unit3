@@ -14,11 +14,7 @@ extends "res://objects/Basic.gd"
 
 func execute (userdata):
 	for i in range(0, 33):
-		if not isBlocked:
-			goForward()
-		else:
-			turnLeft()
-			goForward()
+
 	pass
 
 
@@ -55,6 +51,7 @@ func _ready():
 
 	put_flag_at_cell(17, 10)
 	$Flag.visible = true
+	proceed.post()
 
 func coin_or_switch (cx, cy):
 	if rng.randi() % 2:
@@ -64,4 +61,6 @@ func coin_or_switch (cx, cy):
 	
 	
 	
-	
+func main(userdata):
+	proceed.wait()
+	execute()

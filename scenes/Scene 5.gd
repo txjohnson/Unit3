@@ -18,7 +18,7 @@ func collectOrToggle():
 	
 # INSTRUCTIONS (cont):
 # Use the function above to travel, collect and toggle
-func execute (userdata):
+func execute ():
 
 	pass
 
@@ -58,7 +58,7 @@ func _ready():
 	coin_or_switch (21, 5 + rng.randi() % 6)
 	coin_or_switch (10 + rng.randi() % 4, 5)
 	coin_or_switch (15 + rng.randi() % 4, 5)
-
+	proceed.post()
 
 func coin_or_switch (cx, cy):
 	if rng.randi() % 2:
@@ -67,5 +67,8 @@ func coin_or_switch (cx, cy):
 		put_switch_at_cell (cx, cy)
 	
 	
-	
+func main(userdata):
+	proceed.wait()
+	execute()
+
 	

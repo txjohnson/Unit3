@@ -10,7 +10,7 @@ extends "res://objects/Basic.gd"
 # INSTRUCTIONS (cont):
 # Fill in the body of this function so that Luigi will gather
 # the coins and toggle switches.
-func execute (userdata):
+func execute ():
 	for i in range(0, 16):
 		goForward()
 
@@ -61,7 +61,7 @@ func _ready():
 	put_switch_at_cell(16, 13)
 	put_switch_at_cell(20, 13)
 	put_switch_at_cell(22, 13)
-	
+	proceed.post()
 
 func coin_or_switch (cx, cy):
 	if rng.randi() % 2:
@@ -71,4 +71,6 @@ func coin_or_switch (cx, cy):
 	
 	
 	
-	
+func main(userdata):
+	proceed.wait()
+	execute()

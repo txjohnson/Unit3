@@ -13,7 +13,7 @@ extends "res://objects/Basic.gd"
 # INSTRUCTIONS (cont):
 # Complete the if statement and get Luigi to gather the coins and 
 # navigate the maze.
-func execute (userdata):
+func execute ():
 
 	for i in range (0, 36):
 		if ... :
@@ -55,4 +55,8 @@ func _ready():
 	put_coin_at_cell(19, 4)
 	put_coin_at_cell(11, 4)
 	put_coin_at_cell(11, 10)
-	
+	proceed.post()
+
+func main(userdata):
+	proceed.wait()
+	execute()

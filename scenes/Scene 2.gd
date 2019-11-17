@@ -21,7 +21,7 @@ extends "res://objects/Basic.gd"
 # 1. Move to first position
 # 2. toggleSwitch() or jump() depending on what is ther
 # 3. repeat for next position
-func execute (userdata):
+func execute ():
 
 	pass
 
@@ -64,5 +64,9 @@ func _ready():
 		put_switch_at_cell (16, 9)
 	else:
 		put_coin_at_cell (16, 9)
-	
+
+	proceed.post()
 		
+func main(userdata):
+	proceed.wait()
+	execute()
